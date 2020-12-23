@@ -84,7 +84,7 @@ const Autocomplete: React.FC<Props> = ({ value, separator, options, onChange, pa
                 return 0
             }
 
-            if (delta === 'end') {fi
+            if (delta === 'end') {
                 return maxIndex
             }
 
