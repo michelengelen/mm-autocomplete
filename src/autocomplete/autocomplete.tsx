@@ -24,7 +24,7 @@ const Autocomplete: React.FC<Props> = ({ value, separator, options, onChange, pa
     const [highlightedOptionIndex, setHighlightedOptionIndex] = useState(-1)
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const isOptionsListEmpty = filteredOptions.length === 0;
+    const isOptionsListEmpty = filteredOptions.length === 0
 
     useEffect(() => {
         if (inputRef.current && value.endsWith('""')) {
@@ -47,7 +47,7 @@ const Autocomplete: React.FC<Props> = ({ value, separator, options, onChange, pa
     }, [value, options, separator])
 
     const handleOptionSelect = (optionValue: string) => {
-        const newValue = `${optionValue}${optionValue.endsWith(separator) || optionValue === '""' ? '' : ' '}`;
+        const newValue = `${optionValue}${optionValue.endsWith(separator) || optionValue === '""' ? '' : ' '}`
 
         const termPairs = value.split(' ')
         const lastTermPair = termPairs[termPairs.length - 1]
@@ -163,6 +163,12 @@ const Autocomplete: React.FC<Props> = ({ value, separator, options, onChange, pa
         }
     }
 
+    const handleBlur = () => {
+        if (isOptionsListEmpty) {
+            setShowOptionsList(false)
+        }
+    }
+
     return (
         <div className="wrapper">
             <input
@@ -172,9 +178,9 @@ const Autocomplete: React.FC<Props> = ({ value, separator, options, onChange, pa
                 className="autocomplete"
                 onKeyDown={handleKeyDown}
                 onFocus={() => setShowOptionsList(true)}
-                onBlur={() => setShowOptionsList(false)}
+                onBlur={handleBlur}
             />
-            {filteredOptions.length > 0 ? (
+            {showOptionsList && !isOptionsListEmpty ? (
                 // @ts-ignore
                 <div className="suggestionlist">
                     {filteredOptions.map((option, i) => (
